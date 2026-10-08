@@ -1,0 +1,574 @@
+{
+  "call_id": "02-full-chain",
+  "milestone": "M2",
+  "note": "M2 全链路完成",
+  "steps": [
+    {
+      "step": "analyze",
+      "status": "ok",
+      "elapsed_ms": 3,
+      "input": {
+        "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/test.mid"
+      },
+      "output": {
+        "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/test.mid",
+        "key": "C major",
+        "key_confidence": 0.95,
+        "key_source": "key_signature",
+        "bpm": 90,
+        "time_signature": "4/4",
+        "pitch_min": 60,
+        "pitch_max": 72,
+        "pitch_class_distribution": {
+          "C": 8,
+          "C#": 0,
+          "D": 5,
+          "Eb": 0,
+          "E": 8,
+          "F": 6,
+          "F#": 0,
+          "G": 5,
+          "Ab": 0,
+          "A": 1,
+          "Bb": 0,
+          "B": 0
+        },
+        "phrase_count": 1,
+        "note_count": 33,
+        "instrument_count": 2,
+        "duration_seconds": 21.333
+      }
+    },
+    {
+      "step": "chords",
+      "status": "ok",
+      "elapsed_ms": 0,
+      "input": {
+        "style": "pop",
+        "output_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/output/chords.json"
+      },
+      "output": {
+        "status": "ok",
+        "key": "C major",
+        "is_minor": false,
+        "style": "pop",
+        "harmonic_complexity": 3,
+        "bpm": 90,
+        "bars": 8,
+        "harmonic_figure": "I–V6/5–IV–V–vi–IV–V–I",
+        "chords": [
+          {
+            "bar": 1,
+            "roman": "I",
+            "root_pc": 0,
+            "quality": "major",
+            "inversion": 0,
+            "inversion_name": "根位",
+            "chord_pitches": [
+              60,
+              64,
+              55
+            ],
+            "bass_note": 60,
+            "function": "T",
+            "start_beat": 0,
+            "end_beat": 4
+          },
+          {
+            "bar": 2,
+            "roman": "V6/5",
+            "root_pc": 7,
+            "quality": "major",
+            "inversion": 3,
+            "inversion_name": "三转位",
+            "chord_pitches": [
+              55,
+              59,
+              62
+            ],
+            "bass_note": 55,
+            "function": "D",
+            "start_beat": 4,
+            "end_beat": 8
+          },
+          {
+            "bar": 3,
+            "roman": "IV",
+            "root_pc": 5,
+            "quality": "major",
+            "inversion": 0,
+            "inversion_name": "根位",
+            "chord_pitches": [
+              65,
+              57,
+              60
+            ],
+            "bass_note": 65,
+            "function": "P",
+            "start_beat": 8,
+            "end_beat": 12
+          },
+          {
+            "bar": 4,
+            "roman": "V",
+            "root_pc": 7,
+            "quality": "major",
+            "inversion": 0,
+            "inversion_name": "根位",
+            "chord_pitches": [
+              55,
+              59,
+              62
+            ],
+            "bass_note": 55,
+            "function": "D",
+            "start_beat": 12,
+            "end_beat": 16
+          },
+          {
+            "bar": 5,
+            "roman": "vi",
+            "root_pc": 9,
+            "quality": "minor",
+            "inversion": 0,
+            "inversion_name": "根位",
+            "chord_pitches": [
+              57,
+              60,
+              64
+            ],
+            "bass_note": 57,
+            "function": "T",
+            "start_beat": 16,
+            "end_beat": 20
+          },
+          {
+            "bar": 6,
+            "roman": "IV",
+            "root_pc": 5,
+            "quality": "major",
+            "inversion": 0,
+            "inversion_name": "根位",
+            "chord_pitches": [
+              65,
+              57,
+              60
+            ],
+            "bass_note": 65,
+            "function": "P",
+            "start_beat": 20,
+            "end_beat": 24
+          },
+          {
+            "bar": 7,
+            "roman": "V",
+            "root_pc": 7,
+            "quality": "major",
+            "inversion": 0,
+            "inversion_name": "根位",
+            "chord_pitches": [
+              55,
+              59,
+              62
+            ],
+            "bass_note": 55,
+            "function": "D",
+            "start_beat": 24,
+            "end_beat": 28
+          },
+          {
+            "bar": 8,
+            "roman": "I",
+            "root_pc": 0,
+            "quality": "major",
+            "inversion": 0,
+            "inversion_name": "根位",
+            "chord_pitches": [
+              60,
+              64,
+              55
+            ],
+            "bass_note": 60,
+            "function": "T",
+            "start_beat": 28,
+            "end_beat": 32
+          }
+        ],
+        "inv_name": {
+          "0": "根位",
+          "1": "一转位",
+          "2": "二转位",
+          "3": "三转位"
+        },
+        "output_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/output/chords.json"
+      }
+    },
+    {
+      "step": "stems",
+      "status": "ok",
+      "elapsed_ms": 12,
+      "input": {
+        "style": "pop",
+        "parts": null,
+        "output_dir": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/output/stems"
+      },
+      "output": {
+        "status": "ok",
+        "parts": [
+          "melody",
+          "harmony",
+          "bass",
+          "drums",
+          "countermelody"
+        ],
+        "style": "pop",
+        "density": 0.5,
+        "bpm": 90,
+        "bars": 8,
+        "tracks": [
+          {
+            "part": "melody",
+            "gm_program": 0,
+            "is_drum": false,
+            "note_count": 33,
+            "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/output/stems/melody.mid"
+          },
+          {
+            "part": "harmony",
+            "gm_program": 4,
+            "is_drum": false,
+            "note_count": 24,
+            "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/output/stems/harmony.mid"
+          },
+          {
+            "part": "bass",
+            "gm_program": 38,
+            "is_drum": false,
+            "note_count": 8,
+            "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/output/stems/bass.mid"
+          },
+          {
+            "part": "drums",
+            "gm_program": 96,
+            "is_drum": true,
+            "note_count": 96,
+            "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/output/stems/drums.mid"
+          },
+          {
+            "part": "countermelody",
+            "gm_program": 80,
+            "is_drum": false,
+            "note_count": 1,
+            "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/output/stems/countermelody.mid"
+          }
+        ],
+        "midi_paths": {
+          "melody": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/output/stems/melody.mid",
+          "harmony": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/output/stems/harmony.mid",
+          "bass": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/output/stems/bass.mid",
+          "drums": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/output/stems/drums.mid",
+          "countermelody": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/output/stems/countermelody.mid",
+          "combined": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/output/stems/combined.mid"
+        },
+        "combined_midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/output/stems/combined.mid"
+      }
+    },
+    {
+      "step": "render",
+      "status": "ok",
+      "elapsed_ms": 26255,
+      "input": {
+        "midi_path": null,
+        "wav_path": null
+      },
+      "output": {
+        "status": "ok",
+        "wav_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/output/demo.wav",
+        "size_bytes": 4117804,
+        "soundfont": "default",
+        "fluidsynth": "/opt/anaconda3/bin/fluidsynth",
+        "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/output/stems/combined.mid"
+      }
+    },
+    {
+      "step": "validate",
+      "status": "ok",
+      "elapsed_ms": 33,
+      "input": {
+        "midi_paths": []
+      },
+      "output": {
+        "all_passed": true,
+        "files": {
+          "test.mid": {
+            "all_passed": true,
+            "failures": 0,
+            "checks": [
+              {
+                "name": "轨道数量",
+                "status": "pass",
+                "detail": "共 2 轨"
+              },
+              {
+                "name": "轨道 0 音域",
+                "status": "pass",
+                "detail": "实际 60–72，允许 21–108"
+              },
+              {
+                "name": "轨道 1 音域",
+                "status": "pass",
+                "detail": "实际 60–60，允许 21–108"
+              },
+              {
+                "name": "轨道 0 音符数",
+                "status": "pass",
+                "detail": "33 条音符（阈值 1）"
+              },
+              {
+                "name": "轨道 1 音符数",
+                "status": "pass",
+                "detail": "1 条音符（阈值 1）"
+              },
+              {
+                "name": "速度",
+                "status": "pass",
+                "detail": "BPM=90，允许 40–200"
+              },
+              {
+                "name": "时长",
+                "status": "pass",
+                "detail": "21.33s（允许 0–600s）"
+              }
+            ]
+          },
+          "melody.mid": {
+            "all_passed": true,
+            "failures": 0,
+            "checks": [
+              {
+                "name": "轨道数量",
+                "status": "pass",
+                "detail": "共 1 轨"
+              },
+              {
+                "name": "轨道 0 音域",
+                "status": "pass",
+                "detail": "实际 60–72，允许 21–108"
+              },
+              {
+                "name": "轨道 0 音符数",
+                "status": "pass",
+                "detail": "33 条音符（阈值 1）"
+              },
+              {
+                "name": "速度",
+                "status": "pass",
+                "detail": "BPM=90，允许 40–200"
+              },
+              {
+                "name": "时长",
+                "status": "pass",
+                "detail": "14.22s（允许 0–600s）"
+              }
+            ]
+          },
+          "harmony.mid": {
+            "all_passed": true,
+            "failures": 0,
+            "checks": [
+              {
+                "name": "轨道数量",
+                "status": "pass",
+                "detail": "共 1 轨"
+              },
+              {
+                "name": "轨道 0 音域",
+                "status": "pass",
+                "detail": "实际 55–65，允许 21–108"
+              },
+              {
+                "name": "轨道 0 音符数",
+                "status": "pass",
+                "detail": "24 条音符（阈值 1）"
+              },
+              {
+                "name": "速度",
+                "status": "pass",
+                "detail": "BPM=90，允许 40–200"
+              },
+              {
+                "name": "时长",
+                "status": "pass",
+                "detail": "21.33s（允许 0–600s）"
+              }
+            ]
+          },
+          "bass.mid": {
+            "all_passed": true,
+            "failures": 0,
+            "checks": [
+              {
+                "name": "轨道数量",
+                "status": "pass",
+                "detail": "共 1 轨"
+              },
+              {
+                "name": "轨道 0 音域",
+                "status": "pass",
+                "detail": "实际 41–48，允许 21–108"
+              },
+              {
+                "name": "轨道 0 音符数",
+                "status": "pass",
+                "detail": "8 条音符（阈值 1）"
+              },
+              {
+                "name": "速度",
+                "status": "pass",
+                "detail": "BPM=90，允许 40–200"
+              },
+              {
+                "name": "时长",
+                "status": "pass",
+                "detail": "21.33s（允许 0–600s）"
+              }
+            ]
+          },
+          "drums.mid": {
+            "all_passed": true,
+            "failures": 0,
+            "checks": [
+              {
+                "name": "轨道数量",
+                "status": "pass",
+                "detail": "共 1 轨"
+              },
+              {
+                "name": "轨道 0 音域",
+                "status": "pass",
+                "detail": "实际 36–42，允许 21–108"
+              },
+              {
+                "name": "轨道 0 音符数",
+                "status": "pass",
+                "detail": "96 条音符（阈值 1）"
+              },
+              {
+                "name": "速度",
+                "status": "pass",
+                "detail": "BPM=90，允许 40–200"
+              },
+              {
+                "name": "时长",
+                "status": "pass",
+                "detail": "21.20s（允许 0–600s）"
+              }
+            ]
+          },
+          "countermelody.mid": {
+            "all_passed": true,
+            "failures": 0,
+            "checks": [
+              {
+                "name": "轨道数量",
+                "status": "pass",
+                "detail": "共 1 轨"
+              },
+              {
+                "name": "轨道 0 音域",
+                "status": "pass",
+                "detail": "实际 72–72，允许 21–108"
+              },
+              {
+                "name": "轨道 0 音符数",
+                "status": "pass",
+                "detail": "1 条音符（阈值 1）"
+              },
+              {
+                "name": "速度",
+                "status": "pass",
+                "detail": "BPM=90，允许 40–200"
+              },
+              {
+                "name": "时长",
+                "status": "pass",
+                "detail": "15.22s（允许 0–600s）"
+              }
+            ]
+          },
+          "combined.mid": {
+            "all_passed": true,
+            "failures": 0,
+            "checks": [
+              {
+                "name": "轨道数量",
+                "status": "pass",
+                "detail": "共 5 轨"
+              },
+              {
+                "name": "轨道 0 音域",
+                "status": "pass",
+                "detail": "实际 60–72，允许 21–108"
+              },
+              {
+                "name": "轨道 1 音域",
+                "status": "pass",
+                "detail": "实际 55–65，允许 21–108"
+              },
+              {
+                "name": "轨道 2 音域",
+                "status": "pass",
+                "detail": "实际 41–48，允许 21–108"
+              },
+              {
+                "name": "轨道 3 音域",
+                "status": "pass",
+                "detail": "实际 36–42，允许 21–108"
+              },
+              {
+                "name": "轨道 4 音域",
+                "status": "pass",
+                "detail": "实际 72–72，允许 21–108"
+              },
+              {
+                "name": "轨道 0 音符数",
+                "status": "pass",
+                "detail": "33 条音符（阈值 1）"
+              },
+              {
+                "name": "轨道 1 音符数",
+                "status": "pass",
+                "detail": "24 条音符（阈值 1）"
+              },
+              {
+                "name": "轨道 2 音符数",
+                "status": "pass",
+                "detail": "8 条音符（阈值 1）"
+              },
+              {
+                "name": "轨道 3 音符数",
+                "status": "pass",
+                "detail": "96 条音符（阈值 1）"
+              },
+              {
+                "name": "轨道 4 音符数",
+                "status": "pass",
+                "detail": "1 条音符（阈值 1）"
+              },
+              {
+                "name": "速度",
+                "status": "pass",
+                "detail": "BPM=90，允许 40–200"
+              },
+              {
+                "name": "时长",
+                "status": "pass",
+                "detail": "21.33s（允许 0–600s）"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

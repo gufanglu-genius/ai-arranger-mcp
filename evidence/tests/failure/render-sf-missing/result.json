@@ -1,0 +1,22 @@
+{
+  "test_name": "render-sf-missing",
+  "subdir": "failure/render-sf-missing",
+  "input": "evidence/tests/failure/render-sf-missing/input.mid",
+  "executed_at": "2026-10-06T22:58:50.014656+00:00",
+  "steps": [
+    {
+      "step": "render-sf-missing",
+      "ok": true,
+      "return_or_error": {
+        "status": "failed",
+        "error": "SoundFont 文件不存在：/nonexistent/sf2/missing.sf2（render 硬失败，未用内置默认 SF）",
+        "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/evidence/tests/failure/render-sf-missing/input.mid"
+      },
+      "traceback_tail": ""
+    }
+  ],
+  "verdict": "PASS",
+  "failure_kind": "hard",
+  "behavior_reasonable": true,
+  "note": "渲染环节：None / status=failed（硬失败：明确报错）"
+}

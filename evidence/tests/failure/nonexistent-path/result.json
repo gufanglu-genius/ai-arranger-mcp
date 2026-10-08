@@ -1,0 +1,18 @@
+{
+  "test_name": "nonexistent-path",
+  "subdir": "failure/nonexistent-path",
+  "input": "evidence/tests/failure/nonexistent-path/expected_path.txt",
+  "executed_at": "2026-10-06T22:58:50.014656+00:00",
+  "steps": [
+    {
+      "step": "nonexistent-path",
+      "ok": false,
+      "return_or_error": "MidiLoadError: 文件不存在: /tmp/definitely-not-here-nonexistent.mid",
+      "traceback_tail": "core.MidiLoadError: 文件不存在: /tmp/definitely-not-here-nonexistent.mid"
+    }
+  ],
+  "verdict": "PASS",
+  "failure_kind": "hard",
+  "behavior_reasonable": true,
+  "note": "按预期抛出/报错：MidiLoadError: 文件不存在: /tmp/definitely-not-here-nonexistent.mid"
+}

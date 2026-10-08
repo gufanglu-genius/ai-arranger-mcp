@@ -1,0 +1,60 @@
+{
+  "fluidsynth": "/opt/anaconda3/bin/fluidsynth",
+  "soundfont": "mcp-server/assets/GeneralUser_GS.sf2",
+  "results": [
+    {
+      "part": "melody",
+      "src": "mcp-server/output/stems/melody.mid",
+      "out": "docs/assets/stems/melody.wav",
+      "returncode": 0,
+      "ok": true,
+      "size_bytes": 3030060,
+      "stderr_tail": ""
+    },
+    {
+      "part": "harmony",
+      "src": "mcp-server/output/stems/harmony.mid",
+      "out": "docs/assets/stems/harmony.wav",
+      "returncode": 0,
+      "ok": true,
+      "size_bytes": 4140076,
+      "stderr_tail": ""
+    },
+    {
+      "part": "bass",
+      "src": "mcp-server/output/stems/bass.mid",
+      "out": "docs/assets/stems/bass.wav",
+      "returncode": 0,
+      "ok": true,
+      "size_bytes": 4203052,
+      "stderr_tail": ""
+    },
+    {
+      "part": "drums",
+      "src": "mcp-server/output/stems/drums.mid",
+      "out": "docs/assets/stems/drums.wav",
+      "returncode": 0,
+      "ok": true,
+      "size_bytes": 4123692,
+      "stderr_tail": ""
+    },
+    {
+      "part": "countermelody",
+      "src": "mcp-server/output/stems/countermelody.mid",
+      "out": "docs/assets/stems/countermelody.wav",
+      "returncode": 0,
+      "ok": true,
+      "size_bytes": 3139372,
+      "stderr_tail": ""
+    },
+    {
+      "part": "combined",
+      "src": "mcp-server/output/stems/combined.mid",
+      "out": "docs/assets/stems/combined.wav",
+      "returncode": 0,
+      "ok": true,
+      "size_bytes": 4218668,
+      "stderr_tail": ""
+    }
+  ]
+}

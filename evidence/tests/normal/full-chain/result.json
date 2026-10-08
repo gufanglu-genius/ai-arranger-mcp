@@ -1,0 +1,120 @@
+{
+  "test_name": "full-chain",
+  "subdir": "normal/full-chain",
+  "input": "evidence/tests/normal/full-chain/input.mid",
+  "executed_at": "2026-10-06T22:58:50.014656+00:00",
+  "steps": [
+    {
+      "step": "analyze",
+      "ok": true,
+      "detail": {
+        "key": "C major",
+        "key_confidence": 0.95,
+        "bpm": 90,
+        "time_signature": "4/4",
+        "note_count": 6
+      },
+      "traceback_tail": ""
+    },
+    {
+      "step": "chords",
+      "ok": true,
+      "detail": {
+        "harmonic_figure": "I–IV",
+        "bars": 2,
+        "status": "ok"
+      },
+      "traceback_tail": ""
+    },
+    {
+      "step": "stems",
+      "ok": true,
+      "detail": {
+        "tracks": [
+          {
+            "part": "melody",
+            "gm_program": 0,
+            "is_drum": false,
+            "note_count": 6,
+            "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/evidence/tests/normal/full-chain/stems/melody.mid"
+          },
+          {
+            "part": "harmony",
+            "gm_program": 4,
+            "is_drum": false,
+            "note_count": 6,
+            "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/evidence/tests/normal/full-chain/stems/harmony.mid"
+          },
+          {
+            "part": "bass",
+            "gm_program": 38,
+            "is_drum": false,
+            "note_count": 2,
+            "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/evidence/tests/normal/full-chain/stems/bass.mid"
+          },
+          {
+            "part": "drums",
+            "gm_program": 96,
+            "is_drum": true,
+            "note_count": 18,
+            "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/evidence/tests/normal/full-chain/stems/drums.mid"
+          },
+          {
+            "part": "countermelody",
+            "gm_program": 80,
+            "is_drum": false,
+            "note_count": 1,
+            "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/evidence/tests/normal/full-chain/stems/countermelody.mid"
+          }
+        ],
+        "combined_midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/evidence/tests/normal/full-chain/stems/combined.mid"
+      },
+      "traceback_tail": ""
+    },
+    {
+      "step": "render",
+      "ok": true,
+      "detail": {
+        "status": "ok",
+        "renderer": "fluidsynth",
+        "size_bytes": 1160492
+      },
+      "traceback_tail": ""
+    },
+    {
+      "step": "validate",
+      "ok": true,
+      "detail": {
+        "melody": {
+          "all_passed": true,
+          "failures": 0
+        },
+        "harmony": {
+          "all_passed": true,
+          "failures": 0
+        },
+        "bass": {
+          "all_passed": true,
+          "failures": 0
+        },
+        "drums": {
+          "all_passed": true,
+          "failures": 0
+        },
+        "countermelody": {
+          "all_passed": true,
+          "failures": 0
+        },
+        "combined": {
+          "all_passed": true,
+          "failures": 0
+        }
+      }
+    }
+  ],
+  "verdict": "PASS",
+  "note": "全链路正常",
+  "extra": {
+    "analysis_key": "C major"
+  }
+}

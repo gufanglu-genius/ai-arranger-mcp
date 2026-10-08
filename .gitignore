@@ -1,0 +1,20 @@
+# macOS / 编辑器
+.DS_Store
+~/.agh/
+
+# Python
+__pycache__/
+*.pyc
+mcp-server/.venv/
+
+# 大体积二进制（31MB GM SoundFont，不入 git；获取方式见 mcp-server/README.md 与
+# evidence/validation/incidents.md INC-011，GitHub LFS 渠道）
+mcp-server/assets/*.sf2
+
+# 中间产物（可复现；展示页静态资源 docs/assets/*.wav 与 stems/ 需随仓库提交供
+# GitHub Pages 使用，单文件 2.9–4.0MB < 10MB，不在此忽略；重生成跑 scripts/render_stems_audio.py）
+mcp-server/output/
+
+# 凭据 / 本地配置
+.credentials/
+*.key

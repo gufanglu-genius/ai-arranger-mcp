@@ -1,0 +1,28 @@
+{
+  "file": "output/demo.wav",
+  "renderer": "fluidsynth",
+  "soundfont": "assets/GeneralUser_GS.sf2 (INC-011)",
+  "method": "Python wave+array（本机无 ffmpeg，等效 volumedetect 判定）",
+  "comparisons": {
+    "demo.wav": {
+      "channels": 2,
+      "sr": 44100,
+      "dur_s": 23.92,
+      "peak_db": 0.0,
+      "mean_db": -7.0,
+      "silence": false
+    },
+    "demo-wave.wav": {
+      "channels": 1,
+      "sr": 44100,
+      "dur_s": 21.83,
+      "peak_db": 0.0,
+      "mean_db": -6.2,
+      "silence": false
+    }
+  },
+  "channels": 2,
+  "sample_rate": 44100,
+  "duration_s": 23.92,
+  "note": "M4：SoundFont 成功获取（INC-011，gh LFS 渠道），demo.wav 改由 fluidsynth 真实 GM 音色渲染；demo-wave.wav 为 M3 波形合成版对照"
+}

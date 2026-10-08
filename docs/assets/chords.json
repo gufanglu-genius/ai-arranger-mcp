@@ -1,0 +1,154 @@
+{
+  "status": "ok",
+  "key": "C major",
+  "is_minor": false,
+  "style": "pop",
+  "harmonic_complexity": 3,
+  "bpm": 90,
+  "bars": 8,
+  "harmonic_figure": "I–V6/5–IV–V–vi–IV–V–I",
+  "chords": [
+    {
+      "bar": 1,
+      "roman": "I",
+      "root_pc": 0,
+      "quality": "major",
+      "inversion": 0,
+      "inversion_name": "根位",
+      "chord_pitches": [
+        60,
+        64,
+        55
+      ],
+      "bass_note": 60,
+      "function": "T",
+      "start_beat": 0,
+      "end_beat": 4
+    },
+    {
+      "bar": 2,
+      "roman": "V6/5",
+      "root_pc": 7,
+      "quality": "major",
+      "inversion": 3,
+      "inversion_name": "三转位",
+      "chord_pitches": [
+        55,
+        59,
+        62
+      ],
+      "bass_note": 55,
+      "function": "D",
+      "start_beat": 4,
+      "end_beat": 8
+    },
+    {
+      "bar": 3,
+      "roman": "IV",
+      "root_pc": 5,
+      "quality": "major",
+      "inversion": 0,
+      "inversion_name": "根位",
+      "chord_pitches": [
+        65,
+        57,
+        60
+      ],
+      "bass_note": 65,
+      "function": "P",
+      "start_beat": 8,
+      "end_beat": 12
+    },
+    {
+      "bar": 4,
+      "roman": "V",
+      "root_pc": 7,
+      "quality": "major",
+      "inversion": 0,
+      "inversion_name": "根位",
+      "chord_pitches": [
+        55,
+        59,
+        62
+      ],
+      "bass_note": 55,
+      "function": "D",
+      "start_beat": 12,
+      "end_beat": 16
+    },
+    {
+      "bar": 5,
+      "roman": "vi",
+      "root_pc": 9,
+      "quality": "minor",
+      "inversion": 0,
+      "inversion_name": "根位",
+      "chord_pitches": [
+        57,
+        60,
+        64
+      ],
+      "bass_note": 57,
+      "function": "T",
+      "start_beat": 16,
+      "end_beat": 20
+    },
+    {
+      "bar": 6,
+      "roman": "IV",
+      "root_pc": 5,
+      "quality": "major",
+      "inversion": 0,
+      "inversion_name": "根位",
+      "chord_pitches": [
+        65,
+        57,
+        60
+      ],
+      "bass_note": 65,
+      "function": "P",
+      "start_beat": 20,
+      "end_beat": 24
+    },
+    {
+      "bar": 7,
+      "roman": "V",
+      "root_pc": 7,
+      "quality": "major",
+      "inversion": 0,
+      "inversion_name": "根位",
+      "chord_pitches": [
+        55,
+        59,
+        62
+      ],
+      "bass_note": 55,
+      "function": "D",
+      "start_beat": 24,
+      "end_beat": 28
+    },
+    {
+      "bar": 8,
+      "roman": "I",
+      "root_pc": 0,
+      "quality": "major",
+      "inversion": 0,
+      "inversion_name": "根位",
+      "chord_pitches": [
+        60,
+        64,
+        55
+      ],
+      "bass_note": 60,
+      "function": "T",
+      "start_beat": 28,
+      "end_beat": 32
+    }
+  ],
+  "inv_name": {
+    "0": "根位",
+    "1": "一转位",
+    "2": "二转位",
+    "3": "三转位"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "status": "ok",
+  "key": "C major",
+  "is_minor": false,
+  "style": "pop",
+  "harmonic_complexity": 3,
+  "bpm": 90,
+  "bars": 1,
+  "harmonic_figure": "I",
+  "chords": [
+    {
+      "bar": 1,
+      "roman": "I",
+      "root_pc": 0,
+      "quality": "major",
+      "inversion": 0,
+      "inversion_name": "根位",
+      "chord_pitches": [
+        60,
+        64,
+        55
+      ],
+      "bass_note": 60,
+      "function": "T",
+      "start_beat": 0,
+      "end_beat": 4
+    }
+  ],
+  "inv_name": {
+    "0": "根位",
+    "1": "一转位",
+    "2": "二转位",
+    "3": "三转位"
+  }
+}

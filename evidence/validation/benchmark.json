@@ -1,0 +1,19 @@
+{
+  "steps": {
+    "analyze_s": 0.001,
+    "chords_s": 0.0,
+    "stems_s": 0.006,
+    "render_s": 24.684,
+    "validate_all_s": "(inlined)",
+    "validate_all_passed": true
+  },
+  "full_chain_wall_s": 24.691,
+  "render_detail": {
+    "status": "ok",
+    "renderer": "fluidsynth",
+    "size_bytes": 4217900
+  },
+  "date": "2026-10-06",
+  "env": "clean-tmpdir",
+  "note": "M5 verification-final per-step + full-chain wall time"
+}

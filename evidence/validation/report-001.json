@@ -1,0 +1,280 @@
+{
+  "report_id": "report-001",
+  "milestone": "M2",
+  "files": {
+    "mcp-server/test.mid": {
+      "all_passed": true,
+      "failures": 0,
+      "bpm": 90,
+      "checks": [
+        {
+          "name": "轨道数量",
+          "status": "pass",
+          "detail": "共 2 轨"
+        },
+        {
+          "name": "轨道 0 音域",
+          "status": "pass",
+          "detail": "实际 60–72，允许 21–108"
+        },
+        {
+          "name": "轨道 1 音域",
+          "status": "pass",
+          "detail": "实际 60–60，允许 21–108"
+        },
+        {
+          "name": "轨道 0 音符数",
+          "status": "pass",
+          "detail": "33 条音符（阈值 1）"
+        },
+        {
+          "name": "轨道 1 音符数",
+          "status": "pass",
+          "detail": "1 条音符（阈值 1）"
+        },
+        {
+          "name": "速度",
+          "status": "pass",
+          "detail": "BPM=90，允许 40–200"
+        },
+        {
+          "name": "时长",
+          "status": "pass",
+          "detail": "21.33s（允许 0–600s）"
+        }
+      ]
+    },
+    "mcp-server/output/stems/melody.mid": {
+      "all_passed": true,
+      "failures": 0,
+      "bpm": 90,
+      "checks": [
+        {
+          "name": "轨道数量",
+          "status": "pass",
+          "detail": "共 1 轨"
+        },
+        {
+          "name": "轨道 0 音域",
+          "status": "pass",
+          "detail": "实际 60–72，允许 21–108"
+        },
+        {
+          "name": "轨道 0 音符数",
+          "status": "pass",
+          "detail": "33 条音符（阈值 1）"
+        },
+        {
+          "name": "速度",
+          "status": "pass",
+          "detail": "BPM=90，允许 40–200"
+        },
+        {
+          "name": "时长",
+          "status": "pass",
+          "detail": "14.22s（允许 0–600s）"
+        }
+      ]
+    },
+    "mcp-server/output/stems/harmony.mid": {
+      "all_passed": true,
+      "failures": 0,
+      "bpm": 90,
+      "checks": [
+        {
+          "name": "轨道数量",
+          "status": "pass",
+          "detail": "共 1 轨"
+        },
+        {
+          "name": "轨道 0 音域",
+          "status": "pass",
+          "detail": "实际 55–65，允许 21–108"
+        },
+        {
+          "name": "轨道 0 音符数",
+          "status": "pass",
+          "detail": "24 条音符（阈值 1）"
+        },
+        {
+          "name": "速度",
+          "status": "pass",
+          "detail": "BPM=90，允许 40–200"
+        },
+        {
+          "name": "时长",
+          "status": "pass",
+          "detail": "21.33s（允许 0–600s）"
+        }
+      ]
+    },
+    "mcp-server/output/stems/bass.mid": {
+      "all_passed": true,
+      "failures": 0,
+      "bpm": 90,
+      "checks": [
+        {
+          "name": "轨道数量",
+          "status": "pass",
+          "detail": "共 1 轨"
+        },
+        {
+          "name": "轨道 0 音域",
+          "status": "pass",
+          "detail": "实际 41–48，允许 21–108"
+        },
+        {
+          "name": "轨道 0 音符数",
+          "status": "pass",
+          "detail": "8 条音符（阈值 1）"
+        },
+        {
+          "name": "速度",
+          "status": "pass",
+          "detail": "BPM=90，允许 40–200"
+        },
+        {
+          "name": "时长",
+          "status": "pass",
+          "detail": "21.33s（允许 0–600s）"
+        }
+      ]
+    },
+    "mcp-server/output/stems/drums.mid": {
+      "all_passed": true,
+      "failures": 0,
+      "bpm": 90,
+      "checks": [
+        {
+          "name": "轨道数量",
+          "status": "pass",
+          "detail": "共 1 轨"
+        },
+        {
+          "name": "轨道 0 音域",
+          "status": "pass",
+          "detail": "实际 36–42，允许 21–108"
+        },
+        {
+          "name": "轨道 0 音符数",
+          "status": "pass",
+          "detail": "96 条音符（阈值 1）"
+        },
+        {
+          "name": "速度",
+          "status": "pass",
+          "detail": "BPM=90，允许 40–200"
+        },
+        {
+          "name": "时长",
+          "status": "pass",
+          "detail": "21.20s（允许 0–600s）"
+        }
+      ]
+    },
+    "mcp-server/output/stems/countermelody.mid": {
+      "all_passed": true,
+      "failures": 0,
+      "bpm": 90,
+      "checks": [
+        {
+          "name": "轨道数量",
+          "status": "pass",
+          "detail": "共 1 轨"
+        },
+        {
+          "name": "轨道 0 音域",
+          "status": "pass",
+          "detail": "实际 72–72，允许 21–108"
+        },
+        {
+          "name": "轨道 0 音符数",
+          "status": "pass",
+          "detail": "1 条音符（阈值 1）"
+        },
+        {
+          "name": "速度",
+          "status": "pass",
+          "detail": "BPM=90，允许 40–200"
+        },
+        {
+          "name": "时长",
+          "status": "pass",
+          "detail": "15.22s（允许 0–600s）"
+        }
+      ]
+    },
+    "mcp-server/output/stems/combined.mid": {
+      "all_passed": true,
+      "failures": 0,
+      "bpm": 90,
+      "checks": [
+        {
+          "name": "轨道数量",
+          "status": "pass",
+          "detail": "共 5 轨"
+        },
+        {
+          "name": "轨道 0 音域",
+          "status": "pass",
+          "detail": "实际 60–72，允许 21–108"
+        },
+        {
+          "name": "轨道 1 音域",
+          "status": "pass",
+          "detail": "实际 55–65，允许 21–108"
+        },
+        {
+          "name": "轨道 2 音域",
+          "status": "pass",
+          "detail": "实际 41–48，允许 21–108"
+        },
+        {
+          "name": "轨道 3 音域",
+          "status": "pass",
+          "detail": "实际 36–42，允许 21–108"
+        },
+        {
+          "name": "轨道 4 音域",
+          "status": "pass",
+          "detail": "实际 72–72，允许 21–108"
+        },
+        {
+          "name": "轨道 0 音符数",
+          "status": "pass",
+          "detail": "33 条音符（阈值 1）"
+        },
+        {
+          "name": "轨道 1 音符数",
+          "status": "pass",
+          "detail": "24 条音符（阈值 1）"
+        },
+        {
+          "name": "轨道 2 音符数",
+          "status": "pass",
+          "detail": "8 条音符（阈值 1）"
+        },
+        {
+          "name": "轨道 3 音符数",
+          "status": "pass",
+          "detail": "96 条音符（阈值 1）"
+        },
+        {
+          "name": "轨道 4 音符数",
+          "status": "pass",
+          "detail": "1 条音符（阈值 1）"
+        },
+        {
+          "name": "速度",
+          "status": "pass",
+          "detail": "BPM=90，允许 40–200"
+        },
+        {
+          "name": "时长",
+          "status": "pass",
+          "detail": "21.33s（允许 0–600s）"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "test_name": "wrong-extension",
+  "subdir": "failure/wrong-extension",
+  "input": "evidence/tests/failure/wrong-extension/truncated.mid",
+  "executed_at": "2026-10-06T22:58:50.014656+00:00",
+  "steps": [
+    {
+      "step": "wrong-extension",
+      "ok": false,
+      "return_or_error": "MidiLoadError: 无法解析 MIDI: MThd not found. Probably not a MIDI file",
+      "traceback_tail": "core.MidiLoadError: 无法解析 MIDI: MThd not found. Probably not a MIDI file"
+    }
+  ],
+  "verdict": "PASS",
+  "failure_kind": "hard",
+  "behavior_reasonable": true,
+  "note": "按预期抛出/报错：MidiLoadError: 无法解析 MIDI: MThd not found. Probably not a MIDI file"
+}

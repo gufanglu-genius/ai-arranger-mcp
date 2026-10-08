@@ -1,0 +1,84 @@
+{
+  "call_id": "04-m4-normal",
+  "generated_at": "2026-10-05T06:14:46Z",
+  "duration_s": 0.0,
+  "calls": [
+    {
+      "step": "analyze",
+      "ok": true,
+      "detail": {
+        "key": "C major",
+        "key_confidence": 0.95,
+        "bpm": 90,
+        "time_signature(stat)": "4/4",
+        "melody_time_signature(event)": "3/4",
+        "note_count": 6,
+        "pitch_range": null
+      }
+    },
+    {
+      "step": "chords",
+      "ok": true,
+      "detail": {
+        "harmonic_figure": "I",
+        "bars": 1,
+        "chord_count": 1
+      }
+    },
+    {
+      "step": "stems",
+      "ok": true,
+      "detail": {
+        "tracks": [
+          [
+            "melody",
+            6
+          ],
+          [
+            "harmony",
+            3
+          ],
+          [
+            "bass",
+            1
+          ],
+          [
+            "drums",
+            12
+          ],
+          [
+            "countermelody",
+            1
+          ]
+        ],
+        "combined": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/evidence/tests/normal/full-chain/stems/combined.mid"
+      }
+    },
+    {
+      "step": "render",
+      "ok": true,
+      "detail": {
+        "status": "ok",
+        "renderer": "fluidsynth",
+        "wav_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/evidence/tests/normal/full-chain/demo.wav",
+        "size_bytes": 1094444,
+        "soundfont": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/assets/GeneralUser_GS.sf2",
+        "fluidsynth": "/opt/anaconda3/bin/fluidsynth",
+        "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/evidence/tests/normal/full-chain/stems/combined.mid"
+      }
+    },
+    {
+      "step": "validate",
+      "ok": true,
+      "detail": {
+        "melody": true,
+        "harmony": true,
+        "bass": true,
+        "drums": true,
+        "countermelody": true,
+        "combined": true
+      }
+    }
+  ],
+  "summary": "M4 normal/full-chain 完整链路（C major 3/4, 6 音）+ 真实 GM SoundFont 渲染（INC-011）+ BPM 阈值 40–300 + 拍号事件读回"
+}

@@ -1,0 +1,18 @@
+{
+  "test_name": "corrupt-mid",
+  "subdir": "failure/corrupt-mid",
+  "input": "evidence/tests/failure/corrupt-mid/truncated.mid",
+  "executed_at": "2026-10-06T22:58:50.014656+00:00",
+  "steps": [
+    {
+      "step": "corrupt-mid",
+      "ok": false,
+      "return_or_error": "MidiLoadError: 无法解析 MIDI: ",
+      "traceback_tail": "core.MidiLoadError: 无法解析 MIDI: "
+    }
+  ],
+  "verdict": "PASS",
+  "failure_kind": "hard",
+  "behavior_reasonable": true,
+  "note": "按预期抛出/报错：MidiLoadError: 无法解析 MIDI: "
+}

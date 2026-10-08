@@ -1,0 +1,139 @@
+{
+  "call_id": "01-analyze",
+  "timestamp_note": "M1→M2：analyze 调性修复前后对比 + M2 实装结果",
+  "fix_summary": {
+    "issue": "M1 中 test.mid（C 大调，KS 轮廓单独判定）误判为 Ab minor，置信度 0.4861。",
+    "fix": [
+      "make_test_midi.py：改用 mido 直接写 MIDI，补写 key_signature=0 (C major) + time_signature=4/4 meta 事件",
+      "core.py analyze_impl：优先读取 pm.key_signature_changes（key_source=key_signature，置信度 0.95）",
+      "core.py detect_key：新增主音假设二次确认——KS 排序后对候选加结构分（根音频率、边界音调内、终止音=根音、调内覆盖率），margin<0.15 时降置信度"
+    ],
+    "verification": "修复后 test.mid 判为 C major（key_source=key_signature, confidence=0.95）；KS+confirm 路径对同旋律也判 C major（confidence=1.0，margin 充足）"
+  },
+  "tool": "analyze",
+  "input": {
+    "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/test.mid"
+  },
+  "output": {
+    "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/test.mid",
+    "key": "C major",
+    "key_confidence": 0.95,
+    "key_source": "key_signature",
+    "bpm": 90,
+    "time_signature": "4/4",
+    "pitch_min": 60,
+    "pitch_max": 72,
+    "pitch_class_distribution": {
+      "C": 8,
+      "C#": 0,
+      "D": 5,
+      "Eb": 0,
+      "E": 8,
+      "F": 6,
+      "F#": 0,
+      "G": 5,
+      "Ab": 0,
+      "A": 1,
+      "Bb": 0,
+      "B": 0
+    },
+    "phrase_count": 1,
+    "note_count": 33,
+    "instrument_count": 2,
+    "duration_seconds": 0.021333344
+  },
+  "baseline_before_fix": {
+    "note": "M1 记录（保留作前后对比）：key=Ab minor, confidence=0.4861",
+    "output": {
+      "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/test.mid",
+      "key": "Ab minor",
+      "key_confidence": 0.4861,
+      "bpm": 90,
+      "time_signature": "4/4",
+      "pitch_min": 60,
+      "pitch_max": 72,
+      "pitch_class_distribution": {
+        "C": 8,
+        "C#": 0,
+        "D": 5,
+        "Eb": 0,
+        "E": 8,
+        "F": 6,
+        "F#": 0,
+        "G": 5,
+        "Ab": 0,
+        "A": 1,
+        "Bb": 0,
+        "B": 0
+      },
+      "phrase_count": 1,
+      "note_count": 33,
+      "instrument_count": 2,
+      "duration_seconds": 15.35998464
+    }
+  },
+  "side_tool": {
+    "tool": "validate",
+    "input": {
+      "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/test.mid"
+    },
+    "output": {
+      "midi_path": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/mcp-server/test.mid",
+      "bpm": 90,
+      "all_passed": true,
+      "failures": 0,
+      "checks": [
+        {
+          "name": "轨道数量",
+          "status": "pass",
+          "detail": "共 2 轨"
+        },
+        {
+          "name": "轨道 0 音域",
+          "status": "pass",
+          "detail": "实际 60–72，允许 21–108",
+          "track_index": 0
+        },
+        {
+          "name": "轨道 1 音域",
+          "status": "pass",
+          "detail": "实际 60–60，允许 21–108",
+          "track_index": 1
+        },
+        {
+          "name": "轨道 0 音符数",
+          "status": "pass",
+          "detail": "33 条音符（阈值 1）",
+          "track_index": 0
+        },
+        {
+          "name": "轨道 1 音符数",
+          "status": "pass",
+          "detail": "1 条音符（阈值 1）",
+          "track_index": 1
+        },
+        {
+          "name": "速度",
+          "status": "pass",
+          "detail": "BPM=90，允许 40–200"
+        },
+        {
+          "name": "时长",
+          "status": "pass",
+          "detail": "15.36s（允许 0–600s）"
+        }
+      ]
+    }
+  },
+  "result": {
+    "key": "C major",
+    "key_confidence": 0.95,
+    "key_source": "key_signature",
+    "bpm": 90,
+    "time_signature": "4/4",
+    "melody_time_signature": "4/4",
+    "note_count": 33,
+    "pitch_range": null
+  },
+  "note": "M4 刷新：analyze 增加 melody_time_signature 字段（事件优先）；test.mid 仍判定 C major / 4/4（M2 修复保持）"
+}

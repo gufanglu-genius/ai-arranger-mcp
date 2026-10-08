@@ -1,0 +1,48 @@
+# 模型参与证据（4.2 模型参与证据）
+
+## 会话运行时配置（runtime context 口径）
+
+- model: agnes-3.0-flash
+- preset: standard
+- route: account-acct-b42d44b9-ed2c-4301-90dc-6eff03f4b13f
+- provider: agnes-ai
+- disclosure: standard
+- enforcement: unavailable
+- sessionKey: agnes:fork:f3f35a74c51b55f75795cec7ad6b2852:f3f35a74c51b55f75795cec7ad6b2852:cb9241cb-f2c6-4b99-a229-c20f14687f30:1
+- slot: primary
+- date: 2026-10-06
+- cwd: /Users/chenhuidediannao/Desktop/AI黑客松 编曲
+
+## 使用环节（AI 模型在编曲系统中的实际参与）
+
+1. 编曲方案规划（M2 §0 当前编曲方案）：
+   - analyze 输出（C major, 90 BPM, 4/4, 33 音, 8 小节）→ 确定风格/配器表/和声进行
+   - PLAN.md §0 完整规划（GM program 分配、和弦进行、终止式）
+
+2. 反馈修订（M3 §0.1）：
+   - 用户反馈"伴奏太单薄，副歌部分不够饱满"
+   - 模型规划 ⭐ 修改点（和声垫加厚/鼓组加花/贝斯八度跳进/副旋律填充）
+   - 参数 diff：density 0.5→1.0, section_bars=[4,8], chorus_enhance=True
+
+3. 测试验证（M4 测试样例）：
+   - 设计 11 用例（normal/boundary/failure）
+   - 分析 FAIL 根因（INC-012/013/014）并修复
+
+4. 性能与渲染（M4/M5）：
+   - SoundFont 获取（INC-011, gh LFS 渠道）
+   - 渲染尾部覆盖修复（已知问题#3）
+   - 拍号写入路径复测（time34-write-path）
+
+## 配置交叉（AGH Provider 配置）
+
+- 配置文件路径：`~/.agh/profiles/local-dev/configuration.json`（实际存在，已读取交叉核对）
+- **provider 字段交叉核对**（配置原文）：
+  - provider id: `agnes-ai`
+  - baseUrl: `https://api.agnes-ai.cn/v1`
+  - model: `agnes-3.0-flash`
+  - account label: `gufanglu`（accountId `acct-b42d44b9-ed2c-4301-90dc-6eff03f4b13f`，与 runtime route 一致）
+  - contextWindow: 200000，reasoning: false
+  - authType: api-key，enabled: true
+  - defaultAccountId: `acct-b42d44b9-ed2c-4301-90dc-6eff03f4b13f`（与本会话 route 一致，确认本会话走该 provider）
+- **一致性结论**：runtime context 的 model/preset/route/provider 与 AGH 配置文件完全一致（model=agnes-3.0-flash、route=account-acct-b42d44b9…），本会话确由该 provider 配置驱动。
+- 配套截图：`evidence/model/provider-config.png`（宿主已备好）

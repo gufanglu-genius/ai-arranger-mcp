@@ -1,0 +1,104 @@
+{
+  "test_name": "time34-write-path",
+  "subdir": "normal/time34-write-path",
+  "input": "make_test_midi.generate_34_midi（正式生成器）",
+  "executed_at": "2026-10-06T22:54:14Z",
+  "duration_s": 11.38,
+  "checks": {
+    "write_ts_event_3of4": true,
+    "analyze_reads_event_ts": true,
+    "chords_bars_3per_bar": true,
+    "stems_drums_3per_bar": true,
+    "validate_all_passed": true
+  },
+  "steps": [
+    {
+      "step": "make_test_midi(3/4)",
+      "ok": true,
+      "detail": {
+        "ts_events": [
+          [
+            3,
+            4
+          ]
+        ],
+        "note_count": 12
+      }
+    },
+    {
+      "step": "analyze",
+      "ok": true,
+      "detail": {
+        "key": "C major",
+        "key_confidence": 0.95,
+        "melody_time_signature(event)": "3/4",
+        "time_signature(stat)": "4/4",
+        "bpm": 90,
+        "note_count": 12
+      }
+    },
+    {
+      "step": "chords",
+      "ok": true,
+      "detail": {
+        "harmonic_figure": "I–IV–V–I",
+        "bars": 4,
+        "first_start_beat": 0
+      }
+    },
+    {
+      "step": "stems",
+      "ok": true,
+      "detail": {
+        "tracks": [
+          [
+            "melody",
+            12
+          ],
+          [
+            "harmony",
+            12
+          ],
+          [
+            "bass",
+            4
+          ],
+          [
+            "drums",
+            36
+          ],
+          [
+            "countermelody",
+            1
+          ]
+        ],
+        "drum_notes_expected": 36,
+        "drum_notes_actual": 36,
+        "combined": "/Users/chenhuidediannao/Desktop/AI黑客松 编曲/evidence/tests/normal/time34-write-path/stems/combined.mid"
+      }
+    },
+    {
+      "step": "render",
+      "ok": true,
+      "detail": {
+        "status": "ok",
+        "renderer": "fluidsynth",
+        "size_bytes": 1865772
+      }
+    },
+    {
+      "step": "validate",
+      "ok": true,
+      "detail": {
+        "melody": true,
+        "harmony": true,
+        "bass": true,
+        "drums": true,
+        "countermelody": true,
+        "combined": true
+      }
+    }
+  ],
+  "verdict": "PASS",
+  "note": "3/4 拍号写入→读回→chords/stems 全链路正确"
+}

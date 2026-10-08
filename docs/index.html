@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 编曲助手 — 智能编曲 MCP 系统</title>
+<script>
+
+/* 路径感知：从仓库根用 http.server -d <root> 打开 /docs/ 子树时（URL 以 /docs 开头）为 root 模式，
+   静态资源与 evidence 截图/链接均补 /docs 前缀；双击本地 file:// 或 GitHub Pages（URL 不含 /docs）则保持原样相对。 */
+(function(){
+  var rootMode = location.pathname.indexOf('/docs') >= 0;
+  var P = function(p){ return rootMode ? '/docs/' + p : p; };
+  var E = function(p){ return rootMode ? p : '../' + p; };
+  window.PATH = { P: P, E: E, rootMode: rootMode };
+  document.documentElement.setAttribute('data-root', rootMode ? '1' : '');
+  var main = document.getElementById('mainAudio');
+  if (main) main.src = P('assets/demo.wav');
+})();
+</script>
+<style>
+  :root { --bg: #0b0e14; --panel: #141824; --panel2: #1a2030;
+    --line: #232b3d; --text: #d8e0f0; --muted: #8493ad;
+    --accent: #ff5f7a; --accent2: #4dd0e1; --green: #42e088; --amber: #ffc857; --red: #ff5f7a;
+    --T: #4dd0e1; --S: #ffc857; --D: #ff5f7a;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent2); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .container { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+  section { padding: 32px 0; border-bottom: 1px solid var(--line); }
+  h1 { font-size: 28px; margin: 0 0 6px; font-weight: 700; }
+  h2 { font-size: 19px; margin: 0 0 14px; font-weight: 600; letter-spacing: .3px; }
+  h2 .tag { font-size: 11px; color: var(--muted); border: 1px solid var(--line); border-radius: 4px;
+            padding: 1px 8px; margin-left: 8px; vertical-align: middle; font-weight: 400; }
+  p { color: var(--muted); margin: 4px 0; font-size: 14px; }
+
+  header {
+    background: linear-gradient(160deg, #141824 0%, #0b0e14 70%);
+    border-bottom: 1px solid var(--line); padding: 44px 0 30px;
+  }
+  .header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .tagline { color: var(--muted); font-size: 15px; margin-top: 6px; }
+  .tagline b { color: var(--text); font-weight: 500; }
+  .repo-btn {
+    background: var(--panel2); border: 1px solid var(--line); color: var(--text);
+    padding: 9px 18px; border-radius: 8px; font-size: 13.5px; cursor: pointer; white-space: nowrap;
+  }
+  .repo-btn:hover { border-color: var(--accent2); text-decoration: none; }
+
+  .audio-box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+  .wave-wrap { cursor: pointer; margin-bottom: 12px; }
+  .wave-wrap canvas { width: 100%; height: 84px; display: block; border-radius: 6px; background: #0d1017; }
+  audio { width: 100%; margin-top: 6px; }
+  .wave-hint { font-size: 11.5px; color: var(--muted); margin-top: 6px; }
+
+  .stem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stem-card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 13px 14px; }
+  .stem-card h3 { margin: 0 0 2px; font-size: 14.5px; }
+  .stem-card p { margin: 0; font-size: 12px; }
+  .stem-card audio { width: 100%; height: 34px; margin: 9px 0 4px; }
+  .mute-row { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+  .mute-row input { accent-color: var(--accent2); }
+
+  .meta-strip { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .meta-chip { background: var(--panel2); border: 1px solid var(--line); border-radius: 999px;
+               padding: 5px 14px; font-size: 13px; }
+  .meta-chip b { color: var(--accent2); font-weight: 600; }
+  .chord-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+  .chord-card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 12px; position: relative; overflow: hidden;
+  }
+  .chord-card .roman { font-size: 24px; font-weight: 700; }
+  .chord-card .cn-name { font-size: 13px; margin-top: 1px; }
+  .chord-card .func {
+    display: inline-block; margin-top: 7px; font-size: 11.5px; font-weight: 600;
+    padding: 2px 10px; border-radius: 999px;
+  }
+  .func-T { background: rgba(77,208,225,.15); color: var(--T); border: 1px solid rgba(77,208,225,.4); }
+  .func-S { background: rgba(255,200,87,.15); color: var(--S); border: 1px solid rgba(255,200,87,.4); }
+  .func-D { background: rgba(255,95,122,.15); color: var(--D); border: 1px solid rgba(255,95,122,.4); }
+  .chord-card .bar-no { position: absolute; top: 10px; right: 12px; font-size: 11px; color: var(--muted); }
+  .chord-card .detail { font-size: 11px; color: var(--muted); margin-top: 6px; }
+  .chord-card .detail code { color: var(--text); background: #0d1017; padding: 1px 5px; border-radius: 4px; font-size: 10.5px; }
+
+  .pipe { display: flex; align-items: stretch; gap: 0; flex-wrap: wrap; }
+  .pipe-step { flex: 1 1 0; min-width: 118px; background: var(--panel); border: 1px solid var(--line);
+               border-radius: 10px; padding: 13px 12px; position: relative; }
+  .pipe-step .num { font-size: 11px; color: var(--accent2); letter-spacing: 1px; }
+  .pipe-step .tool { font-family: ui-monospace, Menlo, monospace; font-size: 14px; font-weight: 700; margin-top: 2px; }
+  .pipe-step .desc { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .pipe-arrow { display: flex; align-items: center; color: var(--muted); font-size: 18px; padding: 0 4px; }
+  .pipe-step.ok { border-color: rgba(66,224,136,.5); }
+
+  pre {
+    background: #0d1017; border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px 16px; overflow-x: auto; font-size: 13px; line-height: 1.55;
+    font-family: ui-monospace, Menlo, Consolas, monospace; color: var(--text);
+  }
+  .code-label { font-size: 12px; color: var(--muted); margin: 14px 0 6px; }
+  .code-label b { color: var(--text); }
+
+  .verdict {
+    background: linear-gradient(120deg, rgba(66,224,136,.1), rgba(77,208,225,.05));
+    border: 1px solid rgba(66,224,136,.4); border-radius: 10px; padding: 14px 16px;
+    font-size: 14.5px; margin-bottom: 14px;
+  }
+  .verdict b { color: var(--green); }
+  .evidence-links { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+  .elink {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+    padding: 10px 12px; font-size: 13px; display: flex; gap: 8px; align-items: baseline;
+  }
+  .elink .dot { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto; transform: translateY(1px); }
+  .dot-green { background: var(--green); }
+  .shots { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 14px; }
+  .shots img { width: 100%; border-radius: 8px; border: 1px solid var(--line); display: block; }
+  .shots figcaption { font-size: 10.5px; color: var(--muted); text-align: center; margin-top: 4px; }
+
+  footer { padding: 30px 0 44px; color: var(--muted); font-size: 13px; }
+  footer .disc { background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+                 padding: 12px 14px; margin-top: 12px; }
+
+  /* 窄屏防横向溢出（375px）：禁 body 横向滚动 + 宽元素自适应收缩 */
+  html, body { overflow-x: hidden; max-width: 100%; }
+  .container { max-width: 100%; }
+  .chord-grid { grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); }
+  pre { font-size: 12px; white-space: pre; overflow-x: auto; }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 22px; }
+    .stem-grid { grid-template-columns: 1fr; }
+    .evidence-links { grid-template-columns: 1fr; }
+    .pipe { flex-direction: column; }
+    .pipe-step { width: 100%; min-width: 0; }
+    .pipe-arrow { transform: rotate(90deg); margin: 4px auto; width: 40px; justify-content: center; }
+    .shots { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body class="page-docs">
+
+<header>
+  <div class="container header-row">
+    <div>
+      <h1>AI 编曲助手</h1>
+      <div class="tagline">以 <b>Agnes Harness</b> 为底座的智能编曲 MCP 系统 —— 输入旋律 MIDI，输出多轨编曲 + 可试听渲染</div>
+    </div>
+    <a class="repo-btn" href="#" id="repoBtn" title="仓库 push 后回填">代码仓库（占位）</a>
+  </div>
+</header>
+
+<div class="container">
+
+  <section id="full-audio">
+    <h2>整曲试听<span class="tag">demo.wav · 全轨合并渲染</span></h2>
+    <div class="audio-box">
+      <div class="wave-wrap" id="waveWrap" title="点击跳转进度">
+        <canvas id="waveCanvas" width="920" height="84" style="width:100%;max-width:920px;height:auto"></canvas>
+      </div>      <audio id="mainAudio" controls preload="auto"></audio>      <div class="wave-hint">波形由 Web Audio API <code>decodeAudioData</code> 解码绘制，点击波形可跳转播放进度。</div>
+    </div>
+  </section>
+
+  <section id="stems">
+    <h2>分轨试听<span class="tag">六轨独立 · 各自静音开关</span></h2>
+    <div class="stem-grid" id="stemGrid"></div>
+    <p style="margin-top:10px">六轨均由 <code>fluidsynth + GeneralUser_GS.sf2</code> 渲染（音色统一），构建脚本：<code>scripts/render_stems_audio.py</code>，幂等可复跑。</p>
+  </section>
+
+  <section id="chords">
+    <h2>和弦进行<span class="tag">8 小节 · 卡片视图</span></h2>
+    <div class="meta-strip" id="chordMeta"></div>
+    <div class="chord-grid" id="chordGrid"></div>
+    <p style="margin-top:10px">数据内嵌自 <code>mcp-server/output/chords.json</code>（chords 工具产物）。功能分色：<span style="color:var(--T)">T 主功能</span> / <span style="color:var(--S)">S 下属功能</span> / <span style="color:var(--D)">D 属功能</span>。</p>
+  </section>
+
+  <section id="pipeline">
+    <h2>系统链路<span class="tag">五步 MCP 工具链</span></h2>
+    <div class="pipe">
+      <div class="pipe-step ok"><div class="num">STEP 1</div><div class="tool">analyze</div>
+        <div class="desc">解析 MIDI：调性、拍号、BPM、音域、旋律事件</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step ok"><div class="num">STEP 2</div><div class="tool">chords</div>
+        <div class="desc">和声进行：罗马数字 / 转位 / T-S-D 功能标注</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step ok"><div class="num">STEP 3</div><div class="tool">stems</div>
+        <div class="desc">五声部分轨：旋律 / 和声 / 贝斯 / 鼓 / 副旋律</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step ok"><div class="num">STEP 4</div><div class="tool">render</div>
+        <div class="desc">fluidsynth + GM SoundFont 渲染 WAV（可降级波形）</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step ok"><div class="num">STEP 5</div><div class="tool">validate</div>
+        <div class="desc">专业校验：音域 / 速度 / 时值 / 小节完整性</div></div>
+    </div>
+  </section>
+
+  <section id="quickstart">
+    <h2>快速开始<span class="tag">照 README 已验证内容</span></h2>
+
+    <div class="code-label"><b>安装三步：</b></div>
+    <pre>cd mcp-server
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt</pre>
+
+    <div class="code-label"><b>端到端出 demo.wav（最快路径，照 README 原样）：</b></div>
+    <pre>cd mcp-server
+.venv/bin/python - &lt;&lt;'PY'
+import sys; sys.path.insert(0, ".")
+from core import analyze_impl, chords_impl, stems_impl, render_impl, validate_impl
+a = analyze_impl("test.mid")
+c = chords_impl(a, style="pop", output_path="output/chords.json")
+s = stems_impl(a, c, style="pop", output_dir="output/stems",
+               density=1.0, section_bars=[4, 8], chorus_enhance=True)
+r = render_impl(s["combined_midi_path"], "output/demo.wav")
+print(r["status"], r.get("renderer"), r.get("wav_path"))
+for p in s["midi_paths"].values():
+    print(p, validate_impl(p)["all_passed"])
+PY</pre>
+
+    <div class="code-label"><b>MCP 客户端配置（stdio）：</b></div>
+    <pre>{
+  "mcpServers": {
+    "arrangement": {
+      "command": ".venv/bin/python",
+      "args": ["mcp_server.py"],
+      "cwd": "mcp-server"
+    }
+  }
+}</pre>
+    <p style="margin-top:8px">工具：<code>analyze / validate / chords / stems / render</code>（FastMCP stdio 注册 5 个）。
+    SoundFont 获取方式见 <code>mcp-server/README.md</code>（INC-011，GitHub LFS 渠道）；缺失时 render 自动降级波形合成。</p>
+  </section>
+
+  <section id="verification">
+    <h2>验证与证据<span class="tag">测试 · 事故 · 轨迹</span></h2>
+    <div class="verdict">专业验证：<b>11 用例 0 FAIL</b> + <b>time34 写路径 5/5</b>（拍号写入→读回→chords/stems 全链路）</div>
+    <div class="evidence-links">
+      <a class="elink" href="../evidence/tests/SUMMARY.md"><span class="dot dot-green"></span>evidence/tests/SUMMARY.md（测试一览）</a>
+      <a class="elink" href="../evidence/tests/normal/time34-write-path/result.json"><span class="dot dot-green"></span>time34-write-path/result.json（3/4 写路径 5 检查）</a>
+      <a class="elink" href="../evidence/validation/incidents.md"><span class="dot dot-green"></span>incidents.md（INC-001…016 事故记录）</a>
+      <a class="elink" href="../evidence/validation/benchmark.json"><span class="dot dot-green"></span>benchmark.json（干净环境全链路 25.2s）</a>    </div>
+    <div class="shots" id="shots"></div>
+  </section>
+
+  <section id="runnable">
+    <h2>可运行作品 · 在线体验<span class="tag">4.2 官方八项对应</span></h2>
+    <div class="pipe" style="align-items:stretch">
+      <div class="pipe-step" style="flex:1 1 0"><div class="num">复现说明</div>
+        <div class="tool" style="font-size:13px">README.md</div>
+        <div class="desc">仓库根目录：快速开始三步 + 端到端最快路径，照抄已验证内容。</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step ok" style="flex:1 1 0"><div class="num">展示页</div>
+        <div class="tool" style="font-size:13px">docs/index.html</div>
+        <div class="desc">单文件、内联 CSS/JS、零构建零依赖、GitHub Pages 兼容；本页即其。</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step" style="flex:1 1 0"><div class="num">构建脚本</div>
+        <div class="tool" style="font-size:13px">scripts/render_stems_audio.py</div>
+        <div class="desc">fluidsynth + GeneralUser_GS.sf2 渲染 6 轨 MIDI → WAV，幂等可复跑。</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step" style="flex:1 1 0"><div class="num">在线体验 / 代码仓库</div>
+        <div class="tool" style="font-size:13px">占位 · 待队长回填</div>
+        <div class="desc">Pages 链接与仓库 URL 由队长 push 后回填（4.2 ⑦⑧ 非本系统职责）。</div></div>
+    </div>
+    <div class="verdict" style="margin-top:14px; background:linear-gradient(120deg,rgba(77,208,225,.1),rgba(66,224,136,.05)); border-color:rgba(77,208,225,.4)">
+      验收自查：首页 <b>200</b> · assets 8 资源 404 = <b>0</b> · 六轨 WAV 全部 <b>非静音</b>（peak=32768，2.9–4.0MB &lt;10MB）· 内嵌 chords 与源 <b>diff 一致</b> · 375px 不横向溢出。
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="header-row" style="justify-content:flex-start; gap:24px; flex-wrap:wrap">
+        <div><b style="color:var(--text)">AI 黑客松 · 编曲方向</b><br>AGH（Agnes Harness）智能编曲 MCP 系统</div>
+      </div>
+      <div class="disc">
+        本页为<b>静态展示页</b>：音频、和弦数据、验证结果均预渲染/内嵌，用于在线体验（GitHub Pages 兼容，零构建零依赖，双击本地打开亦可完整使用）。
+        真实的 MCP 工具调用、渲染与校验请在代码仓库中运行 <code>mcp-server</code>，本页不提供在线后端。
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+/*
+ * 路径前缀修复：根据 URL 是否以 /docs 开头（root 模式）统一补前缀。
+ * root 模式（仓库根 http.server）：assets/* → /docs/assets/*，evidence/* → evidence/*；
+ * docs 模式（Pages / 本地双击）：assets/* 保持相对，evidence/* 保持 ../evidence/*。
+ */
+(function fixPaths() {
+  const PM = document.documentElement.dataset.root === "1";
+  document.querySelectorAll("audio").forEach(a => {
+    if (a.src && a.getAttribute("src") && a.getAttribute("src").indexOf("assets/") === 0 && PM)
+      a.setAttribute("src", "/docs/" + a.getAttribute("src"));
+  });
+  document.querySelectorAll("img").forEach(img => {
+    const s = img.getAttribute("src") || "";
+    if (PM && s.indexOf("evidence/") === 0) img.setAttribute("src", "/" + s);
+  });
+  document.querySelectorAll("a[href]").forEach(a => {
+    const h = a.getAttribute("href") || "";
+    if (PM && h.indexOf("../evidence/") === 0) a.setAttribute("href", h.replace("../", ""));
+  });
+})();
+
+/* ===== 数据（内嵌，chords 数据与 mcp-server/output/chords.json 一致）===== */
+const CHORDS = {"status":"ok","key":"C major","is_minor":false,"style":"pop","harmonic_complexity":3,"bpm":90,"bars":8,"harmonic_figure":"I–V6/5–IV–V–vi–IV–V–I","chords":[{"bar":1,"roman":"I","root_pc":0,"quality":"major","inversion":0,"inversion_name":"根位","chord_pitches":[60,64,55],"bass_note":60,"function":"T","start_beat":0,"end_beat":4},{"bar":2,"roman":"V6/5","root_pc":7,"quality":"major","inversion":3,"inversion_name":"三转位","chord_pitches":[55,59,62],"bass_note":55,"function":"D","start_beat":4,"end_beat":8},{"bar":3,"roman":"IV","root_pc":5,"quality":"major","inversion":0,"inversion_name":"根位","chord_pitches":[65,57,60],"bass_note":65,"function":"P","start_beat":8,"end_beat":12},{"bar":4,"roman":"V","root_pc":7,"quality":"major","inversion":0,"inversion_name":"根位","chord_pitches":[55,59,62],"bass_note":55,"function":"D","start_beat":12,"end_beat":16},{"bar":5,"roman":"vi","root_pc":9,"quality":"minor","inversion":0,"inversion_name":"根位","chord_pitches":[57,60,64],"bass_note":57,"function":"T","start_beat":16,"end_beat":20},{"bar":6,"roman":"IV","root_pc":5,"quality":"major","inversion":0,"inversion_name":"根位","chord_pitches":[65,57,60],"bass_note":65,"function":"P","start_beat":20,"end_beat":24},{"bar":7,"roman":"V","root_pc":7,"quality":"major","inversion":0,"inversion_name":"根位","chord_pitches":[55,59,62],"bass_note":55,"function":"D","start_beat":24,"end_beat":28},{"bar":8,"roman":"I","root_pc":0,"quality":"major","inversion":0,"inversion_name":"根位","chord_pitches":[60,64,55],"bass_note":60,"function":"T","start_beat":28,"end_beat":32}],"inv_name":{"0":"根位","1":"一转位","2":"二转位","3":"三转位"}};
+
+const PC_NAMES = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+const MAJOR_DEGS = [0,4,7];
+const rootToName = (pc, isM, deg) => {
+  let root = pc;
+  if (isM) { root = (deg * 3 + 2) % 12; }
+  let n = PC_NAMES[root] + (deg === 6 ? "m" : "");
+  return n;
+};
+
+/* ===== 和弦卡片 ===== */
+(function renderChords() {
+  const meta = document.getElementById("chordMeta");
+  meta.innerHTML =
+    `<div class="meta-chip">调性 <b>${CHORDS.key}</b></div>` +
+    `<div class="meta-chip">风格 <b>${CHORDS.style}</b></div>` +
+    `<div class="meta-chip">小节 <b>${CHORDS.bars}</b></div>` +
+    `<div class="meta-chip">BPM <b>${CHORDS.bpm}</b></div>` +
+    `<div class="meta-chip">和声公式 <b style="font-size:12px">${CHORDS.harmonic_figure}</b></div>`;
+
+  const grid = document.getElementById("chordGrid");
+  const funcName = {T:"T · 主功能", S:"S · 下属功能", D:"D · 属功能"};
+  grid.innerHTML = CHORDS.chords.map(c => {
+    const chordName = rootToName(c.root_pc, CHORDS.is_minor, parseInt(c.roman,10) || 0);
+    const detail = c.inversion > 0 ? `${c.inversion_name}` : "根位";
+    return `<div class="chord-card">
+      <div class="bar-no">bar ${c.bar}</div>
+      <div class="roman">${c.roman}</div>
+      <div class="cn-name">${chordName} · ${detail}</div>
+      <span class="func func-${c.function}">${funcName[c.function] || c.function}</span>
+      <div class="detail"><code>${(c.start_beat)}→${c.end_beat} 拍</code> · 低音 <code>${PC_NAMES[c.bass_note%12]}</code></div>
+    </div>`;
+  }).join("");
+})();
+
+/* ===== 整曲波形（Web Audio 解码 + 点击跳转）===== */
+(function wave() {
+  const audio = document.getElementById("mainAudio");
+  const canvas = document.getElementById("waveCanvas");
+  const wrap = document.getElementById("waveWrap");
+  const ctx = canvas.getContext("2d");
+  let audioCtx = null, peaks = null;
+
+  function draw(peaksArr, progress) {
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle = "#0d1017"; ctx.fillRect(0,0,W,H);
+    const n = peaksArr.length;
+    const barW = W / n;
+    const played = Math.floor(n * progress);
+    for (let i = 0; i < n; i++) {
+      const v = peaksArr[i];
+      const h = Math.max(2, v * (H - 6));
+      const x = i * barW;
+      const y = (H - h) / 2;
+      ctx.fillStyle = i < played ? "#ff5f7a" : "#4dd0e1";
+      ctx.globalAlpha = i < played ? 0.9 : 0.65;
+      ctx.fillRect(x, y, Math.max(1, barW - 1), h);
+    }
+    ctx.globalAlpha = 1;
+    if (progress > 0 && progress < 1) {
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(W * progress - 1, 0, 2, H);
+    }
+  }
+
+  function loadPeaks() {
+    if (peaks) return;
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    fetch(window.PATH.P("assets/demo.wav")).then(r => r.arrayBuffer()).then(buf =>
+      audioCtx.decodeAudioData(buf)
+    ).then(decoded => {
+      const ch = decoded.getChannelData(0);
+      const nBins = 220;
+      const per = Math.floor(ch.length / nBins);
+      const arr = new Array(nBins).fill(0);
+      for (let i = 0; i < nBins; i++) {
+        let m = 0;
+        for (let j = 0; j < per; j += 2) {
+          const v = Math.abs(ch[i*per + j] || 0);
+          if (v > m) m = v;
+        }
+        arr[i] = m;
+      }
+      const max = Math.max(...arr, 0.001);
+      peaks = arr.map(v => v / max);
+      draw(peaks, 0);
+    }).catch(err => {
+      wrap.innerHTML = "<div style='padding:14px;color:#8493ad;font-size:12px'>波形解码失败（文件协议下 fetch 可能被限制，本地 http 服务正常）：" + err + "</div>";
+    });
+  }
+
+  audio.addEventListener("play", loadPeaks);
+  audio.addEventListener("timeupdate", () => {
+    const p = audio.duration ? audio.currentTime / audio.duration : 0;
+    if (peaks) draw(peaks, p);
+  });
+  wrap.addEventListener("click", e => {
+    const rect = canvas.getBoundingClientRect();
+    const p = (e.clientX - rect.left) / rect.width;
+    if (audio.duration) audio.currentTime = p * audio.duration;
+  });
+})();
+
+/* ===== 分轨播放器（六轨 + 静音开关）===== */
+(function stems() {
+  const PM = document.documentElement.dataset.root === "1";
+  const parts = [
+    ["melody","主旋律 · 原旋律保留（Piano）"],
+    ["harmony","和声 · 三和弦/副歌 16 分分解（E.Piano）"],
+    ["bass","贝斯 · 根音 + 副歌八度跳进（Electric Bass）"],
+    ["drums","鼓 · 轻流行 pattern + 副歌加花（Kit 2）"],
+    ["countermelody","副旋律 · 乐句休止填充（Flute）"],
+    ["combined","整轨合并 · 六轨合成（Master）"],
+  ];
+  const grid = document.getElementById("stemGrid");
+  grid.innerHTML = parts.map(([name, desc]) => `
+    <div class="stem-card">
+      <h3>${name}</h3><p>${desc}</p>
+      <audio src="${window.PATH.P('assets/stems/'+name+'.wav')}" controls preload="metadata" id="aud-${name}"></audio>
+      <label class="mute-row"><input type="checkbox" id="mute-${name}" checked> 静音（取消勾选 = 允许播放）</label>
+    </div>`).join("");
+  parts.forEach(([name]) => {
+    const aud = document.getElementById("aud-" + name);
+    const mute = document.getElementById("mute-" + name);
+    aud.muted = true;
+    mute.addEventListener("change", () => { aud.muted = !mute.checked; });
+  });
+})();
+
+/* ===== 轨迹截图（链到 evidence/trajectory，root 模式下前缀由 fixPaths 统一处理）===== */
+(function shots() {
+  const PM = document.documentElement.dataset.root === "1";
+  const items = [
+    ["evidence/trajectory/01-conversation-plan-top.png","方案规划对话"],
+    ["evidence/trajectory/02-trace-timeline-overview.png","轨迹时间线总览"],
+    ["evidence/trajectory/03-trace-tool-steps.png","工具调用步骤"],
+    ["evidence/trajectory/04-trace-deeper.png","深层轨迹展开"],
+    ["evidence/trajectory/05-trace-early-records.png","早期记录"],
+  ];
+  document.getElementById("shots").innerHTML = items.map(([f, cap]) =>
+    `<figure><img src="${window.PATH.E('evidence/trajectory/'+f)}" alt="${cap}" loading="lazy" onerror="this.parentNode.style.display='none'"><figcaption>${cap}</figcaption></figure>`
+  ).join("");
+})();
+</script>
+</body>
+</html>
