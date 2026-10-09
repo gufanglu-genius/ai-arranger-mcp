@@ -117,8 +117,8 @@
 
 | 字段 | 内容 | 状态 | 负责人 |
 |---|---|---|---|
-| 在线体验链接 | 占位（队长 push 后回填 GitHub Pages URL，如 `https://<user>.github.io/<repo>/`） | ⬜ 待回填 | 队长 |
-| 代码仓库 | 仓库根 `README.md`（含 5 工具 MCP 服务 + 展示页 + 证据体系完整说明） | ✅ | Agnes |
+| 在线体验链接 | `https://gufanglu-genius.github.io/ai-arranger-mcp/`（GitHub Pages，已上线） | ✅ 已回填 | 队长 |
+| 代码仓库 | `https://github.com/gufanglu-genius/ai-arranger-mcp`（仓库根 `README.md` 含 5 工具 MCP 服务 + 展示页 + 证据体系完整说明） | ✅ 已回填 | 队长 |
 | 复现说明 | `README.md`「快速开始」节 + `mcp-server/README.md`「端到端出 demo.wav（最快路径）」（venv→pip→make_test_midi→smoke→5 工具全链路） | ✅ | Agnes |
 | 展示页 | `docs/index.html`（单文件、内联 CSS/JS、零构建零依赖、GitHub Pages 兼容、双击本地可开；含整曲波形/分轨试听/和弦卡片/系统链路/快速开始/验证证据/页脚如实说明） | ✅ | Agnes |
 | 构建脚本 | `scripts/render_stems_audio.py`（fluidsynth + `GeneralUser_GS.sf2` 把 6 轨 MIDI → WAV 到 `docs/assets/stems/`，幂等可复跑；已验收 6/6 OK，peak=32768 非静音） | ✅ | Agnes |
@@ -130,6 +130,6 @@
 ## 完整性速览
 
 - ✅ ①②③④⑤⑥ 全部齐备（sessions 2 HTML + call-chains 4 JSON + model 2 + 配置 5 + 验证 6 + 测试 12 目录）。
-- ✅ 「可运行作品 · 在线体验」：展示页 `docs/index.html` + 构建脚本 `scripts/render_stems_audio.py` + 复现说明 `README.md` 就绪；在线体验链接/代码仓库为占位（队长 push 后回填）。
+- ✅ 「可运行作品 · 在线体验」：展示页 `docs/index.html` + 构建脚本 `scripts/render_stems_audio.py` + 复现说明 `README.md` 就绪；在线体验链接 `https://gufanglu-genius.github.io/ai-arranger-mcp/` 与代码仓库 `https://github.com/gufanglu-genius/ai-arranger-mcp` 已回填（Pages 已上线）。
 - ⬜ ⑦⑧ 不在本系统职责（队长提供）。
 - 轨迹截图 5 张已登记归入 ①/②/③。

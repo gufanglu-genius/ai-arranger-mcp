@@ -6,7 +6,8 @@
 
 ## 🌐 在线展示页
 
-> **占位 — 仓库 push 后由队长回填 GitHub Pages 链接。**
+> - **在线体验**：<https://gufanglu-genius.github.io/ai-arranger-mcp/>（GitHub Pages，已上线）
+> - **代码仓库**：<https://github.com/gufanglu-genius/ai-arranger-mcp>
 > 静态展示页：`docs/index.html`（零构建零依赖，GitHub Pages 兼容，双击本地亦可打开）。
 > 构建脚本：`scripts/render_stems_audio.py`（分轨 WAV 渲染，幂等可复跑）。
 
